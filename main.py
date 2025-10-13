@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 
-from src.clients import GeniusAPIClient
+from src.clients import GeniusAPIClient, YouTubeAPIClient
 from src.services import LyricsService
 from src.utils import config, FileHandler
 
 
 def main() -> None:
 
-    # Ge the .env and searches.txt file.
+    # Get the .env and searches.txt file.
     if not config.validate():
         print("\n Tip: Create a .env file with GENIUS_ACCESS_TOKEN=your_token")
         return
@@ -23,9 +23,14 @@ def main() -> None:
     print(f"🎵 Lyrics Eater - Processing {len(searches)} searches")
     print(f"{'='*60}\n")
     
-    # Search songs and extract the lyrics
+    # Initialize clients
     genius_client = GeniusAPIClient(config.GENIUS_ACCESS_TOKEN)
-    lyrics_service = LyricsService(genius_client)
+    youtube_client = YouTubeAPIClient()  # No API key needed
+    
+    print("✅ YouTube scraper enabled (no API limits!)\n")
+    
+    # Initialize service
+    lyrics_service = LyricsService(genius_client, youtube_client)
     
     songs, successful, failed = lyrics_service.process_multiple_queries(searches)
     
