@@ -1,26 +1,27 @@
 # Lyrics Eater
 
-Herramienta profesional para extraer letras de canciones desde Genius.com automáticamente.
+Herramienta profesional para extraer letras de canciones desde Genius.com y enlaces de videos de YouTube automáticamente.
 
 ## ¿Qué es Lyrics Eater?
 
-Lyrics Eater es una aplicación de Python que busca canciones en Genius.com y extrae sus letras, guardando toda la información en un archivo Excel organizado.
+Lyrics Eater es una aplicación de Python que busca canciones en Genius.com, extrae sus letras y encuentra los videos musicales correspondientes en YouTube, guardando toda la información en un archivo Excel organizado.
 
 ## Características
 
--  **Búsqueda automática** de canciones en Genius
--  **Extracción de metadata**: artista, álbum, género, sello discográfico
--  **Scraping de letras** completas
--  **Exportación a Excel** con formato profesional
--  **Procesamiento por lotes** desde archivo de texto
--  **Manejo robusto de errores** y timeouts
+- 🔍 **Búsqueda automática** de canciones en Genius
+- 📝 **Extracción de metadata**: artista, álbum, género, sello discográfico
+- 🎵 **Scraping de letras** completas
+- 🎬 **Enlaces de YouTube** para cada canción (opcional)
+- 📊 **Exportación a Excel** con formato profesional
+- 📦 **Procesamiento por lotes** desde archivo de texto
+- ⚡ **Manejo robusto de errores** y timeouts
 
 ## Estructura del Proyecto
 
 ```
 lyrics-eater/
 ├── src/                    # Código fuente
-│   ├── clients/           # Cliente de API de Genius
+│   ├── clients/           # Clientes de APIs (Genius, YouTube)
 │   ├── services/          # Lógica de procesamiento
 │   ├── models/            # Modelos de datos
 │   └── utils/             # Utilidades (config, archivos)
@@ -44,12 +45,16 @@ lyrics-eater/
    ```
 
 3. **Configurar token de Genius**
+   
    - Ve a https://genius.com/api-clients
    - Crea una aplicación y copia el "Client Access Token"
-   - Crea un archivo `.env` con:
+   
+   Crea un archivo `.env` con:
    ```env
-   GENIUS_ACCESS_TOKEN=tu_token_aquí
+   GENIUS_ACCESS_TOKEN=tu_token_de_genius_aquí
    ```
+   
+   > **Nota:** Los enlaces de YouTube se obtienen automáticamente mediante scraping, ¡sin necesidad de API key!
 
 4. **Crear archivo de búsquedas**
    
@@ -78,6 +83,7 @@ El programa generará un archivo `genius_songs.xlsx` con las siguientes columnas
 | **cancion** | Título de la canción |
 | **letras** | Letras completas de la canción |
 | **enlace_genius** | URL de Genius.com |
+| **enlace_youtube** | URL del video en YouTube (obtenido por scraping) |
 | **discografica** | Sello discográfico/label |
 
 ### Formato del archivo searches.txt
