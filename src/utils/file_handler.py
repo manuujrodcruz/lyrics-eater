@@ -58,7 +58,7 @@ class FileHandler:
             
             df = pd.DataFrame(data)
             
-            df = df[['genero', 'artista', 'cancion', 'letras', 'enlace_genius', 'discografica']]
+            df = df[['genero', 'artista', 'cancion', 'letras', 'enlace_genius', 'enlace_youtube', 'discografica']]
             
             with pd.ExcelWriter(filename, engine='openpyxl') as writer:
                 df.to_excel(writer, index=False, sheet_name='Canciones')
@@ -71,7 +71,8 @@ class FileHandler:
                     'C': 30,  # cancion
                     'D': 80,  # letras
                     'E': 50,  # enlace_genius
-                    'F': 25,  # discografica
+                    'F': 50,  # enlace_youtube
+                    'G': 25,  # discografica
                 }
                 
                 for col, width in column_widths.items():

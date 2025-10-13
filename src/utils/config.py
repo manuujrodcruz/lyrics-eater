@@ -36,6 +36,7 @@ class Config:
         if not cls.GENIUS_ACCESS_TOKEN:
             print(" Error: GENIUS_ACCESS_TOKEN not found in .env file")
             return False
+        
         return True
 
 

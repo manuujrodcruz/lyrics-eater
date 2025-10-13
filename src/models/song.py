@@ -1,30 +1,31 @@
-"""Song data model. """
+"""Data models for song information."""
 
 from dataclasses import dataclass
-from typing import Optional
+from typing import List
 
 
 @dataclass
 class Song:
     """
-    Represents a song with its metadata and lyrics.
-    
+    Represents a song with all its metadata.
     """
-    
-    song_id: int
+    song_id: str
     title: str
     artist: str
     url: str
-    genres: str = "N/A"
-    label: str = "N/A"
-    album: str = "N/A"
-    release_date: str = "N/A"
-    lyrics: str = "N/A"
+    genres: str
+    label: str
+    album: str
+    release_date: str
+    lyrics: str
+    youtube_url: str = "N/A"
     
     def to_dict(self) -> dict:
         """
-        Convert Song to dictionary for DataFrame/Excel export.
+        Convert song to dictionary for export.
         
+        Returns:
+            Dictionary with Spanish column names
         """
         return {
             'genero': self.genres,
@@ -32,9 +33,6 @@ class Song:
             'cancion': self.title,
             'letras': self.lyrics,
             'enlace_genius': self.url,
+            'enlace_youtube': self.youtube_url,
             'discografica': self.label
         }
-    
-    def __str__(self) -> str:
-        """Human-readable string representation."""
-        return f"{self.title} - {self.artist}"

@@ -131,7 +131,8 @@ class GeniusAPIClient:
             genres=", ".join([tag.get("name", "") for tag in tags]) if tags else "N/A",
             label=album.get("label", "N/A") if album else "N/A",
             album=album.get("name", "N/A") if album else "N/A",
-            release_date=song_data.get("release_date_for_display", "N/A")
+            release_date=song_data.get("release_date_for_display", "N/A"),
+            lyrics="" 
         )
     
     def scrape_lyrics(self, url: str, timeout: int = None) -> str:

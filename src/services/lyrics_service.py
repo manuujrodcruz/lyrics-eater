@@ -1,23 +1,27 @@
-""" Lyrics extraction service."""
+"""Business logic for processing song lyrics requests."""
 
 from typing import List, Tuple
-from ..clients.genius_client import GeniusAPIClient
-from ..models.song import Song
+
+from src.clients.genius_client import GeniusAPIClient
+from src.clients.youtube_client import YouTubeAPIClient
+from src.models.song import Song
 
 
 class LyricsService:
     """
-    Service layer for lyrics extraction.
+    Service for processing song search queries and fetching lyrics.
     """
     
-    def __init__(self, genius_client: GeniusAPIClient):
+    def __init__(self, genius_client: GeniusAPIClient, youtube_client: YouTubeAPIClient):
         """
-        Initialize the lyrics service.
+        Initialize the service.
         
         Args:
-            genius_client: Initialized Genius API client
+            genius_client: Genius API client instance
+            youtube_client: YouTube API client instance
         """
-        self.client = genius_client
+        self.genius_client = genius_client
+        self.youtube_client = youtube_client
     
     def process_search_query(self, query: str) -> Tuple[Song, bool]:
         """
@@ -29,7 +33,7 @@ class LyricsService:
         Returns:
             Tuple of (Song object or None, success boolean)
         """
-        results = self.client.search(query)
+        results = self.genius_client.search(query)
         
         if not results:
             print(f"   No results found for '{query}'")
@@ -38,7 +42,7 @@ class LyricsService:
         first_result = results[0]
         print(f"   Found: {first_result['title']} - {first_result['artist']}")
         
-        song = self.client.get_song_details(first_result['id'])
+        song = self.genius_client.get_song_details(first_result['id'])
         
         if not song:
             print(f"   Could not fetch details")
@@ -49,7 +53,7 @@ class LyricsService:
         print(f"    Label: {song.label}")
         
         print(f"     Fetching lyrics...")
-        lyrics = self.client.scrape_lyrics(song.url)
+        lyrics = self.genius_client.scrape_lyrics(song.url)
         
         if lyrics:
             print(f"     Lyrics obtained ({len(lyrics)} chars)")
@@ -57,6 +61,13 @@ class LyricsService:
         else:
             print(f"      Could not obtain lyrics")
             song.lyrics = "N/A"
+        
+        # Fetch YouTube link
+        print(f"     Searching YouTube...")
+        youtube_url = self.youtube_client.search_music_video(song.title, song.artist)
+        if youtube_url:
+            print(f"     ✓ YouTube link found")
+            song.youtube_url = youtube_url
         
         return song, True
     
