@@ -1,0 +1,10 @@
+# Python cache files
+__pycache__/
+
+# Virtual environments
+.venv
+
+# Environment variables
+.env
+
+testing_simple.py
