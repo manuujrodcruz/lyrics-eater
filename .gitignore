@@ -7,4 +7,5 @@ __pycache__/
 # Environment variables
 .env
 
-testing_simple.py
+# Data
+genius_songs.xlsx

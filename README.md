@@ -1,4 +1,4 @@
-# Lyrics Eater
+# Lyrics Eater (Financiado por FondoCyt)
 
 Herramienta profesional para extraer letras de canciones desde Genius.com y enlaces de videos de YouTube automáticamente.
 
