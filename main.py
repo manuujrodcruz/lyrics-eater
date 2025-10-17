@@ -27,7 +27,7 @@ def main() -> None:
     genius_client = GeniusAPIClient(config.GENIUS_ACCESS_TOKEN)
     youtube_client = YouTubeAPIClient()  # No API key needed
     
-    print("✅ YouTube scraper enabled (no API limits!)\n")
+    print("YouTube scraper enabled (no API limits!)\n")
     
     # Initialize service
     lyrics_service = LyricsService(genius_client, youtube_client)
