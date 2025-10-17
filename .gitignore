@@ -8,4 +8,5 @@ __pycache__/
 .env
 
 # Data
-genius_songs.xlsx
+*.xlsx
+*.csv
