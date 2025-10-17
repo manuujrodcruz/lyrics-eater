@@ -1,121 +1,95 @@
-# Lyrics Eater (Financiado por FondoCyt)
+# Lyrics Eater
 
-Herramienta profesional para extraer letras de canciones desde Genius.com y enlaces de videos de YouTube automáticamente.
+A Python tool to automatically scrape song lyrics from Genius.com and fetch corresponding YouTube video links.
 
-## ¿Qué es Lyrics Eater?
+## Features
 
-Lyrics Eater es una aplicación de Python que busca canciones en Genius.com, extrae sus letras y encuentra los videos musicales correspondientes en YouTube, guardando toda la información en un archivo Excel organizado.
+- 🔍 **Automatic song search** on Genius
+- 📝 **Metadata extraction**: artist, album, genre, record label
+- 🎵 **Full lyric scraping**
+- 🎬 **YouTube video links** for each song (optional)
+- 📊 **Professional Excel export**
+- 📦 **Batch processing** from a text file
+- ⚡ **Robust error handling** and timeouts
 
-## Características
-
-- 🔍 **Búsqueda automática** de canciones en Genius
-- 📝 **Extracción de metadata**: artista, álbum, género, sello discográfico
-- 🎵 **Scraping de letras** completas
-- 🎬 **Enlaces de YouTube** para cada canción (opcional)
-- 📊 **Exportación a Excel** con formato profesional
-- 📦 **Procesamiento por lotes** desde archivo de texto
-- ⚡ **Manejo robusto de errores** y timeouts
-
-## Estructura del Proyecto
+## Project Structure
 
 ```
 lyrics-eater/
-├── src/                    # Código fuente
-│   ├── clients/           # Clientes de APIs (Genius, YouTube)
-│   ├── services/          # Lógica de procesamiento
-│   ├── models/            # Modelos de datos
-│   └── utils/             # Utilidades (config, archivos)
-├── main.py                # Punto de entrada
-├── .env                   # Variables de entorno
-├── searches.txt           # Búsquedas (una por línea)
-└── requirements.txt       # Dependencias
+├── src/
+│   ├── clients/
+│   ├── services/
+│   ├── models/
+│   └── utils/
+├── main.py
+├── .env
+├── searches.txt
+└── requirements.txt
 ```
 
-## Instalación
+## Setup
 
-1. **Clonar el repositorio**
-   ```bash
-   git clone <tu-repo>
-   cd lyrics-eater
-   ```
+1.  **Clone the repository**
+    ```bash
+    git clone <your-repo>
+    cd lyrics-eater
+    ```
 
-2. **Instalar dependencias**
-   ```bash
-   pip install -r requirements.txt
-   ```
+2.  **Install dependencies**
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-3. **Configurar token de Genius**
-   
-   - Ve a https://genius.com/api-clients
-   - Crea una aplicación y copia el "Client Access Token"
-   
-   Crea un archivo `.env` con:
-   ```env
-   GENIUS_ACCESS_TOKEN=tu_token_de_genius_aquí
-   ```
-   
-   > **Nota:** Los enlaces de YouTube se obtienen automáticamente mediante scraping, ¡sin necesidad de API key!
+3.  **Set up Genius Token**
+    - Go to https://genius.com/api-clients
+    - Create an application and copy the "Client Access Token".
+    - Create a `.env` file with your token:
+      ```env
+      GENIUS_ACCESS_TOKEN=your_genius_token_here
+      ```
+    > **Note:** YouTube links are scraped automatically without an API key.
 
-4. **Crear archivo de búsquedas**
-   
-   Edita `searches.txt` con las canciones que deseas buscar (una por línea):
-   ```
-   Obsesión - Aventura
-   Propuesta Indecente - Romeo Santos
-   Bachata Rosa - Juan Luis Guerra
-   ```
+4.  **Create Searches File**
+    Edit `searches.txt` with one song per line:
+    ```
+    Obsesión - Aventura
+    Propuesta Indecente - Romeo Santos
+    Bachata Rosa - Juan Luis Guerra
+    ```
 
-## Uso
+## Usage
 
-### Ejecución básica
+### Basic Execution
 ```bash
 python main.py
 ```
 
-### Resultado
+### Output
 
-El programa generará un archivo `genius_songs.xlsx` con las siguientes columnas:
+The script generates a `genius_songs.xlsx` file with the following columns:
 
-| Columna | Descripción |
-|---------|-------------|
-| **genero** | Géneros musicales de la canción |
-| **artista** | Nombre del artista |
-| **cancion** | Título de la canción |
-| **letras** | Letras completas de la canción |
-| **enlace_genius** | URL de Genius.com |
-| **enlace_youtube** | URL del video en YouTube (obtenido por scraping) |
-| **discografica** | Sello discográfico/label |
+| Column | Description |
+|---|---|
+| **genre** | Song's musical genres |
+| **artist** | Artist's name |
+| **song** | Song title |
+| **lyrics** | Full song lyrics |
+| **genius_link** | Genius.com URL |
+| **youtube_link** | YouTube video URL (scraped) |
+| **label** | Record label |
 
-### Formato del archivo searches.txt
+## Dependencies
 
-```txt
-# Puedes agregar comentarios con #
-# Una búsqueda por línea
+- `requests`
+- `beautifulsoup4`
+- `pandas`
+- `openpyxl`
+- `python-dotenv`
 
-Obsesión - Aventura
-Propuesta Indecente - Romeo Santos
-Imagine - John Lennon
+---
 
-# Las líneas vacías se ignoran
-Bohemian Rhapsody - Queen
-```
+## Acknowledgment
 
-## Configuración Avanzada
+This project has been partially supported by the Ministerio de Educación Superior, Ciencia y Tecnología (MESCyT) of the Dominican Republic through the FONDOCYT grant. The authors gratefully acknowledge this support.
 
-Puedes modificar la configuración en `src/utils/config.py`:
-
-```python
-API_TIMEOUT = 20              # Timeout para búsquedas (segundos)
-SCRAPING_TIMEOUT = 20         # Timeout para extracción de letras
-RESULTS_PER_PAGE = 1          # Resultados por búsqueda (1 = primer resultado)
-OUTPUT_FILE = "genius_songs.xlsx"  # Nombre del archivo de salida
-```
-
-## 🛠️ Dependencias
-
-- `requests`: Para peticiones HTTP
-- `beautifulsoup4`: Para scraping de letras
-- `pandas`: Para manejo de datos
-- `openpyxl`: Para exportar a Excel
-- `python-dotenv`: Para variables de entorno
-
+Any opinions, findings, conclusions, or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of MESCyT.
